@@ -36,10 +36,10 @@ get_tunnel_link() {
     yes yes | ssh -o StrictHostKeyChecking=accept-new -o ServerAliveInterval=60 -o ExitOnForwardFailure=yes -R 80:localhost:8080 nokey@localhost.run > .tunnel.log 2>&1 &
     tunnel_pid=$!
 
-    sleep 3
+    sleep 5
 
     if grep -q "https://" ".tunnel.log"; then
-        tunnel_url=$(grep -o 'https://[^ ]*\.lhr\.life' .tunnel.log)
+        tunnel_url=$(grep -o 'https://[^ ]*' .tunnel.log | grep '\.lhr\.life' | head -n 1)
         if [[ -n "$tunnel_url" ]]; then
             echo "✨ 発行URL: $tunnel_url"
 
